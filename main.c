@@ -1,26 +1,68 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "main.h"
 
-int isExt(char *buffer)
+/**
+ * exec - executes the command
+ * @cmd: command input
+ * Return: 0 on success1 -1 if exit and 1 if other error
+ */
+int exec(char *cmd)
 {
-	char *exit = "exit";
-	int i;
+	int state;
+	pid_t child_pid;
 
-	for (i = 0; i < 4; i++)
+	if (strncmp("exit", cmd, 4) == 0)
+		return (-1);
+
+	child_pid = fork();
+
+	if (child_pid == -1)
 	{
-		if (exit[i] != buffer[i])
+		perror("Error:");
+		return (1);
+	}
+	else if (child_pid == 0)
+	{
+		char *argv[] = {"", NULL};
+
+		if (execve(cmd, argv, NULL) == -1)
 		{
-			return (1);
+			perror("Error:");
+			exit(-1);
 		}
 	}
+	else
+	{
+		wait(&state);
+	}
+
 	return (0);
 }
 
-int main(void)
+/**
+ * main - simple shell
+ * @argc: number of input arguments
+ * @argv: list of input arguments
+ * Return: 0, -1 on error.
+ */
+
+int main(int argc, char const *argv[])
 {
 
-	size_t txt, size = 32;
 	char *buffer;
+	const char separator[] = " ";
+	int res;
+	char *tkn;
+	size_t size = 32;
+	int isPipe = 0;
+
+	if (argc == 2)
+	{
+		char buffer[strlen(argv[1])];
+
+		strcpy(buffer, argv[1]);
+		exec(buffer);
+		return (1);
+	}
 
 	buffer = (char *)malloc(size * sizeof(char));
 	if (buffer == NULL)
@@ -30,12 +72,17 @@ int main(void)
 	}
 
 	do {
-		printf("cisfun#: ");
-		txt = getline(&buffer, &size, stdin);
-		printf("%ld characters were read.\n", txt);
-		printf("You typed: %s", buffer);
+		if (isatty(fileno(stdin)))
+		{
+			isPipe = 1;
+			printf("cisfun#: ");
+		}
 
-	} while (isExt(buffer));
+		getline(&buffer, &size, stdin);
+		tkn = strtok(buffer, separator);
+		buffer[strlen(buffer) - 1] = '\0';
+		res = exec(tkn);
+	} while (isPipe && res != -1);
 
 	return (0);
 }
