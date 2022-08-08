@@ -15,4 +15,12 @@ simple_shell is a command line interpreter, or shell, in the tradition of the fi
    * Or run the shell in non-interactive mode: example `echo "pwd" | ./hsh`
 # Usage
 The simple_shell is designed to execute commands in a similar manner to sh, however with more limited functionality. The development of this shell is ongoing. The below features will be checked as they become available (see man page for complete information on usage):
-#Testing
+# Testing
+```
+$ ./hsh
+($) /bin/ls
+hsh main.c shell.c
+($)
+($) exit
+$
+```
