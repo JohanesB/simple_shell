@@ -16,6 +16,7 @@ simple_shell is a command line interpreter, or shell, in the tradition of the fi
 # Usage
 The simple_shell is designed to execute commands in a similar manner to sh, however with more limited functionality. The development of this shell is ongoing. The below features will be checked as they become available (see man page for complete information on usage):
 # Testing
+Your shell should work like this in interactive mode:
 ```
 $ ./hsh
 ($) /bin/ls
@@ -24,3 +25,20 @@ hsh main.c shell.c
 ($) exit
 $
 ```
+But also in non-interactive mode:
+```
+$ echo "/bin/ls" | ./hsh
+hsh main.c shell.c test_ls_2
+$
+$ cat test_ls_2
+/bin/ls
+/bin/ls
+$
+$ cat test_ls_2 | ./hsh
+hsh main.c shell.c test_ls_2
+hsh main.c shell.c test_ls_2
+$
+```
+# Authors
+Yohanes Bacha |[Github](https://github.com/JohanesB)
+Mohamed Reda |[Github](https://github.com/Reda-codes)
