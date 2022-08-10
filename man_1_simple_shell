@@ -47,6 +47,11 @@ Below Test still not running
 6. Simple shell 0.1.1
 9. setenv, unsetenv
 10. cd
+11. ;
+12. && and ||
+13. alias
+14. Variables
+16. File as input
 
 .SH AUTHOR
 Mohamed , Yohanes
