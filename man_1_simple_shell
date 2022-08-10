@@ -42,7 +42,11 @@ $ ls -l
 
 
 .SH BUGS
-3. Simple shell 0.3 not done 100%
+Below Test still not running
+3. Simple shell 0.3
+6. Simple shell 0.1.1
+9. setenv, unsetenv
+10. cd
 
 .SH AUTHOR
 Mohamed , Yohanes
